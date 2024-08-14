@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pico Jarvis</title>
+    <title>Akmal - Learn GenAI</title>
 </head>
 
 <body class="full-h">
@@ -53,6 +53,7 @@
                 $('prompt').blur();
                 const url = '/chat?q=' + encodeURIComponent(question);
                 fetch(url).then(response => {
+                    console.log(response)
                     if (response.status !== 200) {
                         throw new Error('Unable to get an answer!')
                     }
@@ -80,6 +81,7 @@
 
             setTimeout(() => {
                 message('assistant', 'Hi, this is Pico Jarvis!');
+                message('assistant', 'I love Marvel very much, you can ask me any questions about all marvel characters/comics.. or just ask anything you want!');
             }, 0);
 
             const tests = [
