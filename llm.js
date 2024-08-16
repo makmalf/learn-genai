@@ -44,16 +44,20 @@ export async function act(text) {
   const fnName = action.substring(0, sep);
   const fnArgs = action.substring(sep + 1).trim().split(" ");
   console.log('fnName', fnName)
-  if (fnName === "lookup") return null;
+  const onlyFunctions = ['timezone', 'marvelheroes']
+  if (!onlyFunctions.includes(fnName.toLowerCase())) {
+    return null
+  }
 
-  if (fnName === "timezone") {
-    const result = timezone(fnArgs[0])
+  if (fnName.toLowerCase() === "timezone") {
+    // @TODO concat all fnArgs until fnArgs.length - 1 and put in the first arg
+    const result = timezone(fnArgs[0].toLowerCase(), fnArgs[(fnArgs.length - 1)])
     console.log("ACT: timezone", { args: fnArgs, result });
     return { action, name: fnName, args: fnArgs, result }
   }
 
-  if (fnName === "marvelheroes") {
-    const result = await marvelheroes(fnArgs[0], fnArgs[1])
+  if (fnName.toLowerCase() === "marvelheroes") {
+    const result = await marvelheroes(fnArgs[0].toLowerCase(), fnArgs[1]?.toLowerCase())
     console.log("ACT: marvelheroes", { args: fnArgs, result });
     return { action, name: fnName, args: fnArgs, result }
   }
@@ -79,7 +83,7 @@ export async function generate(prompt) {
 			prompt,
 			options: {
 				num_predict: 200,
-				temperature: 0,
+				temperature: 1,
 				top_k: 20,
 			},
 			stream: false,
